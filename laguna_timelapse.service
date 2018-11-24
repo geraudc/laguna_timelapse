@@ -1,0 +1,15 @@
+[Unit]
+Description=Laguna timelapse
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 laguna_timelapse.py > /var/log/laguna_timelapse/laguna_timelapse.log 2>&1
+WorkingDirectory=/opt/laguna_timelapse/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
