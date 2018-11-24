@@ -11,7 +11,7 @@ Another timelapse for raspberry pi <https://github.com/geraudc/laguna_timelapse.
 
 Download a release from https://github.com/geraudc/laguna_timelapse/releases/
 
-Excute commands :
+Execute this commands :
 
 ```bash
 tar -xvf <tar_name>
@@ -20,7 +20,36 @@ sudo ./install.sh
 sync
 ```
 
-The 
+You will be able to see the frontend : <http://pi_ip_address>
+
+The app will be installed in the directory </opt/laguna_timelapse/> and
+can be launched by ```pi``` user.
+
+## Usage
+
+Start timelapse :
+
+```bash
+sudo systemctl start laguna_timelapse
+```
+
+Stop timelapse :
+
+```bash
+sudo systemctl stop laguna_timelapse
+```
+
+Start timelapse on boot :
+
+```bash
+sudo systemctl enable laguna_timelapse
+```
+
+Do not start timelapse on boot :
+
+```bash
+sudo systemctl disable laguna_timelapse
+```
 
 ## Dependencies
 
