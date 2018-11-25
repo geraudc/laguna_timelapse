@@ -5,6 +5,7 @@ import socket
 import subprocess
 import glob
 import errno
+import time
 
 def symlink_force(target, link_name):
     try:
@@ -34,7 +35,8 @@ def index():
 
     return render_template(
         'laguna_timelapse.html', 
-        hostname=socket.gethostname())
+        hostname=socket.gethostname(),
+        latest_picture="static/latest_picture.jpg?" + str(int(time.time())))
  
 @app.route("/camera/<string:command>/")
 def command(command):
