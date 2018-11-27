@@ -8,6 +8,7 @@ from datetime import datetime
 import sys
 from subprocess import call
 import socket
+from PIL import Image
 
 # Script path
 scriptPath = os.path.dirname(sys.argv[0])
@@ -31,7 +32,7 @@ logging.basicConfig(filename=str(localTargetFolder) + d.strftime("%Y_%m_%d__%H_%
 logging.debug(" Laguna timelapse ")
 
 # Configuration
-uploadToDropbox = True
+uploadToDropbox = False
 convertPicture = True
 waitBetweenPictureInSec = 60
 imgWidth = 1920 # Max = 2592 
@@ -56,20 +57,35 @@ while True :
                 str(imgHeight) + " -o " + localTargetFile + \
                 " -rot 270 -ex auto -awb auto -v")
 
-    if convertPicture :
-        os.system("convert -resize 50% -pointsize 18 -fill blue " + \
-                    " -draw \"text 25,25 '$(date '+%d-%m-%Y %H:%M')'\" " + \
-                    str(localTargetFile) + " " + str(localTargetFile))
-        logging.debug("Image converted : "+ str(localTargetFile))
-        print("Image converted : " + str(localTargetFile))
-    
-    if uploadToDropbox :
-        TheCall = os.path.join(scriptAbsPath, "dropbox_uploader.sh") + \
-                " upload " + str(localTargetFile) + " " + str(remoteTargetFile)
-        call ([TheCall], shell=True)
-        logging.debug('Image uploaded to : ' + str(remoteTargetFile))
-        print("Upload done : " + str(remoteTargetFile))
+    # Test picture darkness
+    im = Image.open(localTargetFile).convert('L')
+    pixels = im.getdata() # get the pixels as a flattened sequence
+    black_thresh = 50 # Adjust your threshold for "black" between 0 
+    # (pitch black) and 255 (bright white) as appropriate
+    nblack = 0
+    for pixel in pixels:
+        #print(str(pixel))
+        if pixel < black_thresh:
+            nblack += 1
+    n = len(pixels)
+
+    if (nblack / float(n)) > 0.5 :
+        print("Mostly black picture will be removed")
+        os.remove(localTargetFile)
+    else :
+        if convertPicture :
+            os.system("convert -resize 50% -pointsize 18 -fill blue " + \
+                        " -draw \"text 25,25 '$(date '+%d-%m-%Y %H:%M')'\" " + \
+                        str(localTargetFile) + " " + str(localTargetFile))
+            logging.debug("Image converted : "+ str(localTargetFile))
+            print("Image converted : " + str(localTargetFile))
+        
+        if uploadToDropbox :
+            TheCall = os.path.join(scriptAbsPath, "dropbox_uploader.sh") + \
+                    " upload " + str(localTargetFile) + " " + str(remoteTargetFile)
+            call ([TheCall], shell=True)
+            logging.debug('Image uploaded to : ' + str(remoteTargetFile))
+            print("Upload done : " + str(remoteTargetFile))
     
     # Wait before next capture in seconds
     time.sleep(waitBetweenPictureInSec)
-
