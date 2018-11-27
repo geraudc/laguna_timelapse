@@ -20,10 +20,12 @@ cp laguna_timelapse_frontend.py $install_dir
 cp -r template $install_dir
 cp -r static $install_dir
 cp dropbox_uploader.sh $install_dir
+cp laguna_timelapse_dropbox_clean.sh $install_dir
 
 chmod +x $install_dir/dropbox_uploader.sh
 chmod +x $install_dir/laguna_timelapse.py
 chmod +x $install_dir/laguna_timelapse_frontend.py
+chmod +x $install_dir/laguna_timelapse_dropbox_clean.sh
 
 chown -R pi:pi /opt/laguna_timelapse
 chown -R pi:pi /var/log/laguna_timelapse
@@ -31,6 +33,8 @@ chown -R pi:pi /var/log/laguna_timelapse
 echo "  Setting up usb key"
 
 #mount /dev/sda1 /media/usb -o uid=pi,gid=pi
+mkdir -p /media/usb
+chown -R pi:pi /media/usb
 usb_uuid=$(ls -l /dev/disk/by-uuid/ | grep sda1 | cut -d " " -f9)
 if ! grep -q "$usb_uuid" /etc/fstab ; then
     apt-get --assume-yes install exfat-fuse
