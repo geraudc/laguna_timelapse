@@ -32,13 +32,13 @@ logging.basicConfig(filename=str(localTargetFolder) + d.strftime("%Y_%m_%d__%H_%
 logging.debug(" Laguna timelapse ")
 
 # Configuration
-uploadToDropbox = False
+uploadToDropbox = True
 convertPicture = True
 waitBetweenPictureInSec = 60
 imgWidth = 1920 # Max = 2592 
 imgHeight = 1080 # Max = 1944
 
-# Run a WHILE Loop of infinitely
+# Run a while Loop of infinitely
 while True :
 
     d = datetime.now()
@@ -69,9 +69,10 @@ while True :
             nblack += 1
     n = len(pixels)
 
-    if (nblack / float(n)) > 0.5 :
+    if (nblack / float(n)) > 0.7 :
         print("Mostly black picture will be removed")
         os.remove(localTargetFile)
+        logging.debug("Image deleted : "+ str(localTargetFile))
     else :
         if convertPicture :
             os.system("convert -resize 50% -pointsize 18 -fill blue " + \
