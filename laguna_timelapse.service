@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=idle
-ExecStart=/usr/bin/python3 laguna_timelapse.py > /var/log/laguna_timelapse/laguna_timelapse.log 2>&1
+ExecStart=/usr/bin/python3 laguna_timelapse.py 2>&1 > /var/log/laguna_timelapse/laguna_timelapse.log
 WorkingDirectory=/opt/laguna_timelapse/
 StandardOutput=inherit
 StandardError=inherit
