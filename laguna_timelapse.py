@@ -38,6 +38,8 @@ waitBetweenPictureInSec = 60
 imgWidth = 1920 # Max = 2592 
 imgHeight = 1080 # Max = 1944
 
+pre_d = d # The previous date
+
 # Run a while Loop of infinitely
 while True :
 
@@ -82,11 +84,19 @@ while True :
             print("Image converted : " + str(localTargetFile))
         
         if uploadToDropbox :
-            TheCall = os.path.join(scriptAbsPath, "dropbox_uploader.sh") + \
+            command = os.path.join(scriptAbsPath, "dropbox_uploader.sh") + \
                     " upload " + str(localTargetFile) + " " + str(remoteTargetFile)
-            call ([TheCall], shell=True)
+            call ([command], shell=True)
             logging.debug('Image uploaded to : ' + str(remoteTargetFile))
             print("Upload done : " + str(remoteTargetFile))
-    
+
+            # Clean dropbox at midnight every days 
+            if pre_d.day < d.day :
+                command = os.path.join(scriptAbsPath, "laguna_timelapse_dropbox_clean.sh")
+                call ([command], shell=True)
+
+    # Save date as previous date
+    pre_d = d
+
     # Wait before next capture in seconds
     time.sleep(waitBetweenPictureInSec)

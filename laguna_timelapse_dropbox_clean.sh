@@ -1,8 +1,9 @@
 #! /bin/bash
 
-dayold_limit=2
+dayold_limit=15
+
 # Get hostname
-#hostname=$(hostname)
+hostname=$(hostname)
 hostname=raspilondon
 filesdates=$(/opt/laguna_timelapse/dropbox_uploader.sh list \
 laguna_timelapse/$hostname | grep -Eo \
@@ -25,5 +26,6 @@ while read -r date_extracted; do
 
     if [[ $dDiff > $dayold_limit ]]; then
         echo "delete the file $dDiff day old : /laguna_timelapse/$hostname/$hostname_$date_extracted_saved.jpg"
+        /opt/laguna_timelapse/dropbox_uploader.sh delete "/laguna_timelapse/$hostname/$hostname_$date_extracted_saved.jpg"
     fi 
 done <<< "$filesdates"
