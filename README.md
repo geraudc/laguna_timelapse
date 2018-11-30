@@ -93,6 +93,14 @@ sudo sh -c 'iptables-save > /etc/iptables/rules.v4'
 
 You will now be able to install laguna_timelpase using "Fast install" section.
 
+## Development
+
+* Export to target from gitbash : ```./export.sh <tar.get.ip.addr>```
+
+* Check logs in real time
+  * ```journalctl -f -u laguna_timelapse```
+  * ```journalctl -f -u laguna_timelapse_frontend```
+
 ## Bilbiography
 
 * init.d :
