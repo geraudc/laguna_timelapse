@@ -80,6 +80,11 @@ Install some dependencies :
 ```bash
 sudo apt-get update && sudo apt-get --assume-yes upgrade
 sudo apt-get --assume-yes install python3-pip python3-dev python3-rpi.gpio imagemagick iptables-persistent
+
+sudo apt-get install libatlas3-base libwebp-dev gstreamer1.0-plugins-base -y
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev -y
+sudo apt-get install libqtgui4 libqt4-test -y
+
 sudo pip3 install flask
 sudo pip3 install pillow
 ```
@@ -114,3 +119,11 @@ You will now be able to install laguna_timelpase using "Fast install" section.
   * <https://stackoverflow.com/questions/6920858/interprocess-communication-in-python>
 * imaging :
   * <https://stackoverflow.com/questions/27868250/python-find-out-how-much-of-an-image-is-black>
+* video feed :
+  * <https://raspberrypi.stackexchange.com/questions/7446/how-can-i-stream-h-264-video-from-the-raspberry-pi-camera-module-via-a-web-serve>
+  * <https://blog.miguelgrinberg.com/post/how-to-build-and-run-mjpg-streamer-on-the-raspberry-pi>
+  * <https://blog.miguelgrinberg.com/post/stream-video-from-the-raspberry-pi-camera-to-web-browsers-even-on-ios-and-android>
+  * <https://blog.miguelgrinberg.com/post/flask-video-streaming-revisited>
+* android app :
+  * https://stackoverflow.com/questions/14262094/android-is-there-a-way-to-stream-video-on-a-app
+  * <https://github.com/niqdev/ipcam-view>
